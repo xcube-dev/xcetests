@@ -6,16 +6,11 @@ schemas:
   - http://schema.org/version/9.0/schemaorg-current-http.rdf
 $graph:
   - class: Workflow
-    id: xcengine_ap
+    id: xceconvert-1
     label: xcengine notebook
     doc: xcengine notebook
     requirements: []
     inputs:
-      url:
-        label: url
-        doc: url
-        type: string
-        default: https://eoepca.org/media_portal/images/logo6_med.original.png
       size:
         label: size
         doc: size
@@ -26,6 +21,11 @@ $graph:
         doc: fn
         type: string
         default: resize
+      url:
+        label: url
+        doc: url
+        type: string
+        default: https://eoepca.org/media_portal/images/logo6_med.original.png
     outputs:
       - id: stac_catalog
         type: Directory
@@ -35,19 +35,19 @@ $graph:
       run_script:
         run: '#xce_script'
         in:
-          url: url
           size: size
           fn: fn
+          url: url
         out:
           - results
   - class: CommandLineTool
     id: xce_script
     requirements:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:1.2
+        dockerPull: quay.io/bcdev/xcenginetest:1
     hints:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:1.2
+        dockerPull: quay.io/bcdev/xcenginetest:1
     baseCommand:
       - /usr/local/bin/_entrypoint.sh
       - python
@@ -56,13 +56,6 @@ $graph:
       - --batch
       - --eoap
     inputs:
-      url:
-        label: url
-        doc: url
-        type: string
-        default: https://eoepca.org/media_portal/images/logo6_med.original.png
-        inputBinding:
-          prefix: --url
       size:
         label: size
         doc: size
@@ -77,6 +70,13 @@ $graph:
         default: resize
         inputBinding:
           prefix: --fn
+      url:
+        label: url
+        doc: url
+        type: string
+        default: https://eoepca.org/media_portal/images/logo6_med.original.png
+        inputBinding:
+          prefix: --url
     outputs:
       results:
         type: Directory
