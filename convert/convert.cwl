@@ -6,26 +6,26 @@ schemas:
   - http://schema.org/version/9.0/schemaorg-current-http.rdf
 $graph:
   - class: Workflow
-    id: xceconvert-4
+    id: xceconvert-5
     label: xcengine notebook
     doc: xcengine notebook
     requirements: []
     inputs:
-      fn:
-        label: fn
-        doc: fn
-        type: string
-        default: resize
-      size:
-        label: size
-        doc: size
-        type: string
-        default: 50%
       url:
         label: url
         doc: url
         type: string
         default: https://eoepca.org/media_portal/images/logo6_med.original.png
+      size:
+        label: size
+        doc: size
+        type: string
+        default: 50%
+      fn:
+        label: fn
+        doc: fn
+        type: string
+        default: resize
     outputs:
       - id: stac_catalog
         type: Directory
@@ -35,19 +35,19 @@ $graph:
       run_script:
         run: '#xce_script'
         in:
-          fn: fn
-          size: size
           url: url
+          size: size
+          fn: fn
         out:
           - results
   - class: CommandLineTool
     id: xce_script
     requirements:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:4
+        dockerPull: quay.io/bcdev/xcetest-convert:5
     hints:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:4
+        dockerPull: quay.io/bcdev/xcetest-convert:5
     baseCommand:
       - /usr/local/bin/_entrypoint.sh
       - python
@@ -56,20 +56,6 @@ $graph:
       - --batch
       - --eoap
     inputs:
-      fn:
-        label: fn
-        doc: fn
-        type: string
-        default: resize
-        inputBinding:
-          prefix: --fn
-      size:
-        label: size
-        doc: size
-        type: string
-        default: 50%
-        inputBinding:
-          prefix: --size
       url:
         label: url
         doc: url
@@ -77,6 +63,20 @@ $graph:
         default: https://eoepca.org/media_portal/images/logo6_med.original.png
         inputBinding:
           prefix: --url
+      size:
+        label: size
+        doc: size
+        type: string
+        default: 50%
+        inputBinding:
+          prefix: --size
+      fn:
+        label: fn
+        doc: fn
+        type: string
+        default: resize
+        inputBinding:
+          prefix: --fn
     outputs:
       results:
         type: Directory
