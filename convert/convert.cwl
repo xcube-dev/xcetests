@@ -6,16 +6,11 @@ schemas:
   - http://schema.org/version/9.0/schemaorg-current-http.rdf
 $graph:
   - class: Workflow
-    id: xceconvert-1
+    id: xceconvert-2
     label: xcengine notebook
     doc: xcengine notebook
     requirements: []
     inputs:
-      size:
-        label: size
-        doc: size
-        type: string
-        default: 50%
       fn:
         label: fn
         doc: fn
@@ -26,6 +21,11 @@ $graph:
         doc: url
         type: string
         default: https://eoepca.org/media_portal/images/logo6_med.original.png
+      size:
+        label: size
+        doc: size
+        type: string
+        default: 50%
     outputs:
       - id: stac_catalog
         type: Directory
@@ -35,19 +35,19 @@ $graph:
       run_script:
         run: '#xce_script'
         in:
-          size: size
           fn: fn
           url: url
+          size: size
         out:
           - results
   - class: CommandLineTool
     id: xce_script
     requirements:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcenginetest:1
+        dockerPull: quay.io/bcdev/xcenginetest:2
     hints:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcenginetest:1
+        dockerPull: quay.io/bcdev/xcenginetest:2
     baseCommand:
       - /usr/local/bin/_entrypoint.sh
       - python
@@ -56,13 +56,6 @@ $graph:
       - --batch
       - --eoap
     inputs:
-      size:
-        label: size
-        doc: size
-        type: string
-        default: 50%
-        inputBinding:
-          prefix: --size
       fn:
         label: fn
         doc: fn
@@ -77,6 +70,13 @@ $graph:
         default: https://eoepca.org/media_portal/images/logo6_med.original.png
         inputBinding:
           prefix: --url
+      size:
+        label: size
+        doc: size
+        type: string
+        default: 50%
+        inputBinding:
+          prefix: --size
     outputs:
       results:
         type: Directory
