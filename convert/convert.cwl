@@ -6,7 +6,7 @@ schemas:
   - http://schema.org/version/9.0/schemaorg-current-http.rdf
 $graph:
   - class: Workflow
-    id: xceconvert-6
+    id: xceconvert-7
     label: xcengine notebook
     doc: xcengine notebook
     requirements: []
@@ -44,10 +44,10 @@ $graph:
     id: xce_script
     requirements:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:6
+        dockerPull: quay.io/bcdev/xcetest-convert:7
     hints:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:6
+        dockerPull: quay.io/bcdev/xcetest-convert:7
     baseCommand:
       - /usr/local/bin/_entrypoint.sh
       - python
