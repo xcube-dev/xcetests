@@ -6,7 +6,7 @@ schemas:
   - http://schema.org/version/9.0/schemaorg-current-http.rdf
 $graph:
   - class: Workflow
-    id: xceconvert-7
+    id: xceconvert-8
     label: xcengine notebook
     doc: xcengine notebook
     requirements: []
@@ -16,16 +16,16 @@ $graph:
         doc: fn
         type: string
         default: resize
-      url:
-        label: url
-        doc: url
-        type: string
-        default: https://eoepca.org/media_portal/images/logo6_med.original.png
       size:
         label: size
         doc: size
         type: string
         default: 50%
+      url:
+        label: url
+        doc: url
+        type: string
+        default: https://eoepca.org/media_portal/images/logo6_med.original.png
     outputs:
       - id: stac_catalog
         type: Directory
@@ -36,18 +36,18 @@ $graph:
         run: '#xce_script'
         in:
           fn: fn
-          url: url
           size: size
+          url: url
         out:
           - results
   - class: CommandLineTool
     id: xce_script
     requirements:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:7
+        dockerPull: quay.io/bcdev/xcetest-convert:8
     hints:
       DockerRequirement:
-        dockerPull: quay.io/bcdev/xcetest-convert:7
+        dockerPull: quay.io/bcdev/xcetest-convert:8
     baseCommand:
       - /usr/local/bin/_entrypoint.sh
       - python
@@ -63,13 +63,6 @@ $graph:
         default: resize
         inputBinding:
           prefix: --fn
-      url:
-        label: url
-        doc: url
-        type: string
-        default: https://eoepca.org/media_portal/images/logo6_med.original.png
-        inputBinding:
-          prefix: --url
       size:
         label: size
         doc: size
@@ -77,6 +70,13 @@ $graph:
         default: 50%
         inputBinding:
           prefix: --size
+      url:
+        label: url
+        doc: url
+        type: string
+        default: https://eoepca.org/media_portal/images/logo6_med.original.png
+        inputBinding:
+          prefix: --url
     outputs:
       results:
         type: Directory
